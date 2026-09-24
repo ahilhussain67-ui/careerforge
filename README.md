@@ -77,13 +77,15 @@ Set these Render environment variables. Use the internal Render PostgreSQL hostn
 
 ```text
 SPRING_PROFILES_ACTIVE=prod
-DB_URL=jdbc:postgresql://<postgres-host>:5432/<database-name>
+DB_HOST=<postgres-host>
+DB_PORT=<postgres-port>
+DB_NAME=<database-name>
 DB_USERNAME=<postgres-username>
 DB_PASSWORD=<postgres-password>
 APP_CORS_ALLOWED_ORIGIN=https://<your-vercel-project>.vercel.app
 ```
 
-The Blueprint supplies `DB_URL` from the existing database `connectionString`, which Render provides as `postgresql://...`. The production profile prepends `jdbc:` so Spring receives the required `jdbc:postgresql://...` URL. Do not commit database credentials or production `.env` files.
+The Blueprint supplies the database host, port, database name, user, and password from the existing `careerforge-db` resource. The production profile constructs `jdbc:postgresql://${DB_HOST}:${DB_PORT}/${DB_NAME}`; credentials are never embedded in the JDBC URL. Do not commit database credentials or production `.env` files.
 
 ## Render Blueprint
 

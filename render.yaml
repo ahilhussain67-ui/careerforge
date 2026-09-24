@@ -10,10 +10,18 @@ services:
     envVars:
       - key: SPRING_PROFILES_ACTIVE
         value: prod
-      - key: DB_URL
+      - key: DB_HOST
         fromDatabase:
           name: careerforge-db
-          property: connectionString
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: careerforge-db
+          property: port
+      - key: DB_NAME
+        fromDatabase:
+          name: careerforge-db
+          property: database
       - key: DB_USERNAME
         fromDatabase:
           name: careerforge-db
