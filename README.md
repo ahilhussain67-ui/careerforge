@@ -83,7 +83,7 @@ DB_PASSWORD=<postgres-password>
 APP_CORS_ALLOWED_ORIGIN=https://<your-vercel-project>.vercel.app
 ```
 
-`DB_URL` must use the `jdbc:postgresql://` form. The Render Blueprint supplies it from the existing database connection string. Do not commit database credentials or production `.env` files.
+The Blueprint supplies `DB_URL` from the existing database `connectionString`, which Render provides as `postgresql://...`. The production profile prepends `jdbc:` so Spring receives the required `jdbc:postgresql://...` URL. Do not commit database credentials or production `.env` files.
 
 ## Render Blueprint
 
