@@ -1,0 +1,26 @@
+services:
+  - type: web
+    name: careerforge-backend
+    runtime: docker
+    plan: free
+    region: singapore
+    branch: main
+    rootDir: carrerforge
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: prod
+      - key: DB_URL
+        fromDatabase:
+          name: careerforge-db
+          property: connectionString
+      - key: DB_USERNAME
+        fromDatabase:
+          name: careerforge-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: careerforge-db
+          property: password
+      - key: APP_CORS_ALLOWED_ORIGIN
+        sync: false

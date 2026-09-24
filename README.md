@@ -85,6 +85,22 @@ APP_CORS_ALLOWED_ORIGIN=https://<your-vercel-project>.vercel.app
 
 `DB_URL` must use the `jdbc:postgresql://` form. `JDBC_DATABASE_URL` remains supported as a backward-compatible fallback. Do not commit database credentials or production `.env` files.
 
+## Render Blueprint
+
+The repository root contains `render.yaml`. It defines only the `careerforge-backend` Docker web service and references the existing Render PostgreSQL database `careerforge-db`; it does not create a second database.
+
+Blueprint settings:
+
+- Runtime: Docker
+- Branch: `main`
+- Region: Singapore
+- Root directory: `carrerforge`
+- Dockerfile path: `./Dockerfile`
+- Database: existing `careerforge-db` through `fromDatabase` references
+- `APP_CORS_ALLOWED_ORIGIN`: supply the Vercel frontend URL manually during the initial Blueprint setup (`sync: false`)
+
+After connecting the GitHub repository in Render, create or update the Blueprint from `render.yaml`, confirm that the three database references resolve to `careerforge-db`, and enter the Vercel URL when Render prompts for `APP_CORS_ALLOWED_ORIGIN`. This repository does not deploy automatically.
+
 ## Database and seed behavior
 
 The default profile keeps local file-backed H2 in `./data/carrerforge`. The `prod` profile uses PostgreSQL through the PostgreSQL JDBC driver. Hibernate remains on `ddl-auto=update` for this project so the existing schema can start without a migration tool; review a Flyway or Liquibase migration before handling production schema changes.
