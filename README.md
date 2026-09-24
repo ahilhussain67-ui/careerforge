@@ -63,25 +63,27 @@ Create a Web Service from the repository with these settings:
 | Setting | Value |
 | --- | --- |
 | Root Directory | `carrerforge` |
-| Runtime | `Java` |
-| Build Command | `./mvnw clean package -DskipTests` |
-| Start Command | `java -jar target/carrerforge-0.0.1-SNAPSHOT.jar` |
+| Runtime | `Docker` |
+| Dockerfile Path | `Dockerfile` |
+| Branch | `main` |
+
+The Dockerfile uses a multi-stage Eclipse Temurin Java 17 build and runtime image. Render builds it from `carrerforge/Dockerfile` and starts the container with the Render-provided `PORT` value, defaulting to `8080` locally.
 
 Create a Render PostgreSQL database in the same Render workspace and region as the Web Service. Use its internal database host, port, database name, user, and password to populate the backend variables below. Do not use the public database URL when the Web Service and database share a Render region.
 
-Set `JAVA_VERSION` to `17` if the Render service does not already use Java 17 or newer. Render supplies the `PORT` variable; the application binds to it automatically and falls back to `8080` locally.
+Render supplies the `PORT` variable. `JAVA_VERSION` is not required for the Docker runtime because the Dockerfile pins Eclipse Temurin 17; it may be set to `17` as metadata if your Render workspace requires it.
 
 Set these Render environment variables. Use the internal Render PostgreSQL hostname and credentials, and keep the password in Render's secret environment storage:
 
 ```text
 SPRING_PROFILES_ACTIVE=prod
-JDBC_DATABASE_URL=jdbc:postgresql://<postgres-host>:5432/<database-name>
+DB_URL=jdbc:postgresql://<postgres-host>:5432/<database-name>
 DB_USERNAME=<postgres-username>
 DB_PASSWORD=<postgres-password>
 APP_CORS_ALLOWED_ORIGIN=https://<your-vercel-project>.vercel.app
 ```
 
-`JDBC_DATABASE_URL` must use the `jdbc:postgresql://` form. Do not commit database credentials or production `.env` files.
+`DB_URL` must use the `jdbc:postgresql://` form. `JDBC_DATABASE_URL` remains supported as a backward-compatible fallback. Do not commit database credentials or production `.env` files.
 
 ## Database and seed behavior
 
@@ -97,6 +99,7 @@ npm.cmd run build
 
 cd ..\carrerforge
 ./mvnw.cmd clean test
+./mvnw.cmd package -DskipTests
 ```
 
 Deployment is not performed by this repository preparation.
