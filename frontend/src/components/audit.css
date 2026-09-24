@@ -1,0 +1,10 @@
+.course-progress-copy { display: flex; justify-content: space-between; margin-top: .5rem; color: var(--muted); font-size: .75rem; }
+.practice-results { display: grid; grid-template-columns: repeat(4, 1fr); gap: .65rem; margin: 1.5rem 0; text-align: left; }
+.practice-results div { padding: .8rem; border: 1px solid var(--line); border-radius: var(--radius-sm); background: #f8fafc; }
+.practice-results strong, .practice-results span { display: block; }
+.practice-results strong { color: var(--navy); font-size: 1.35rem; }
+.practice-results span { margin-top: .2rem; color: var(--muted); font-size: .72rem; }
+.feedback-list { display: grid; gap: .7rem; max-height: 280px; overflow: auto; margin: 1.25rem 0; text-align: left; }
+.feedback-item { padding: .75rem .85rem; border: 1px solid var(--line); border-left: 3px solid #93c5fd; border-radius: 0 var(--radius-sm) var(--radius-sm) 0; background: #f8fafc; }
+.feedback-item strong { color: var(--navy); font-size: .88rem; }
+.feedback-item p { margin: .25rem 0 0; color: var(--muted); font-size: .82rem; line-height: 1.5; }

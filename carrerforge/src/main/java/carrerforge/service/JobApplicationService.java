@@ -1,0 +1,9 @@
+package carrerforge.service;
+import carrerforge.dto.*;import carrerforge.entity.*;import carrerforge.repository.*;
+import org.springframework.stereotype.Service;import java.time.LocalDateTime;import java.util.*;
+@Service public class JobApplicationService {
+ private final JobApplicationRepository applications;private final JobRepository jobs;private final UserRepository users;
+ public JobApplicationService(JobApplicationRepository applications,JobRepository jobs,UserRepository users){this.applications=applications;this.jobs=jobs;this.users=users;}
+ public ApplicationResponse apply(ApplicationRequest request){if(applications.existsByJobIdAndUserId(request.jobId(),request.userId()))throw new IllegalArgumentException("You have already applied for this job.");JobApplication a=new JobApplication();a.setJob(jobs.findById(request.jobId()).orElseThrow(()->new NoSuchElementException("Job not found")));a.setUser(users.findById(request.userId()).orElseThrow(()->new NoSuchElementException("User not found")));a.setFullName(request.fullName());a.setEmail(request.email());a.setPhone(request.phone());a.setResumeFileName(request.resumeFileName());a.setCoverLetter(request.coverLetter());a.setAppliedAt(LocalDateTime.now());a.setStatus(ApplicationStatus.APPLIED);return ApplicationResponse.from(applications.save(a));}
+ public ApplicationResponse get(Long id){return ApplicationResponse.from(applications.findById(id).orElseThrow(()->new NoSuchElementException("Application not found")));}public List<ApplicationResponse> user(Long id){return applications.findByUserIdOrderByAppliedAtDesc(id).stream().map(ApplicationResponse::from).toList();}public List<ApplicationResponse> job(Long id){return applications.findByJobIdOrderByAppliedAtDesc(id).stream().map(ApplicationResponse::from).toList();}public List<ApplicationResponse> all(){return applications.findAll().stream().map(ApplicationResponse::from).toList();}
+}

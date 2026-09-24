@@ -1,0 +1,52 @@
+@media (max-width: 980px) {
+  .topbar { flex-wrap: wrap; gap: .8rem 1rem; padding-block: .8rem; }
+  .topbar nav { order: 3; width: 100%; overflow-x: auto; padding-bottom: .1rem; }
+  .topbar nav::-webkit-scrollbar { height: 0; }
+  .resume-layout { grid-template-columns: 1fr; }
+  .filter-panel { grid-template-columns: 1fr 1fr; }
+  .job-card { align-items: flex-start; }
+  .learning-layout { grid-template-columns: 1fr; }
+  .lesson-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .35rem; }
+  .lesson-list h3 { grid-column: 1 / -1; }
+  .learning-head { align-items: flex-start; }
+  .progress-summary { min-width: 180px; }
+  .resume-preview { position: static; }
+}
+
+@media (max-width: 700px) {
+  .nav-toggle { display: block; margin-left: auto; }
+  .topbar nav { display: none; flex-basis: 100%; }
+  .topbar nav.nav-open { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .25rem; padding: .5rem; border: 1px solid var(--line); border-radius: var(--radius-sm); background: #f8fafc; }
+  .topbar nav.nav-open .nav-link { text-align: left; }
+  .user-menu { margin-left: 0; }
+  .auth-layout { display: block; }
+  .auth-hero { min-height: 390px; padding: 6rem 1.5rem 2.5rem; }
+  .auth-hero h1 { font-size: 2.45rem; }
+  .auth-panel { padding: 2rem 1.25rem 3rem; }
+  .content { padding: 2rem 1.25rem 3rem; }
+  .quick-grid, .course-grid, .topic-picker { grid-template-columns: 1fr; }
+  .dashboard-hero { align-items: flex-start; flex-direction: column; }
+  .hero-stat { width: 100%; padding: 1rem 0 0; border-top: 1px solid rgba(255,255,255,.2); border-left: 0; }
+  .filter-panel { grid-template-columns: 1fr; }
+  .job-card, .application-card { flex-direction: column; gap: 1rem; }
+  .job-actions { width: 100%; align-items: stretch; flex-direction: row; flex-wrap: wrap; }
+  .job-actions .button { flex: 1; }
+  .learning-head { flex-direction: column; padding: 1.35rem; }
+  .progress-summary { width: 100%; min-width: 0; }
+  .lesson-list { grid-template-columns: 1fr; }
+  .lesson-list h3 { grid-column: auto; }
+  .lesson-view, .practice-card, .result-card, .resume-form, .resume-preview { padding: 1.15rem; }
+  .practice-top { align-items: flex-start; flex-direction: column; width: 100%; }
+  .practice-top .progress-track { width: 100%; }
+  .practice-results { grid-template-columns: repeat(2, 1fr); }
+  .form-actions, .lesson-actions { flex-wrap: wrap; }
+  .form-actions .button, .lesson-actions .button { flex: 1 1 140px; }
+  .job-modal { padding: 1.35rem; }
+}
+
+@media (max-width: 420px) {
+  .topbar { align-items: flex-start; }
+  .user-menu { margin-left: 0; }
+  .nav-link { padding-inline: .55rem; font-size: .8rem; }
+  h1 { font-size: 2rem; }
+}
