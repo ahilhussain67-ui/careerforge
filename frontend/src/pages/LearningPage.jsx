@@ -4,7 +4,7 @@ import ProgressBar from "../components/ProgressBar";
 import { ErrorState, LoadingState } from "../components/AsyncState";
 import { getLessons, getProgress, setLessonProgress } from "../services/api";
 
-export default function LearningPage({ user, page, onNavigate, onLogout, course, onBack }) {
+export default function LearningPage({ user, page, onNavigate, onLogout, course, courseId, onBack }) {
   const [lessons, setLessons] = useState([]);
   const [done, setDone] = useState([]);
   const [active, setActive] = useState(0);
@@ -13,14 +13,14 @@ export default function LearningPage({ user, page, onNavigate, onLogout, course,
   const load = useCallback(async () => {
     setLoading(true); setError("");
     try {
-      const lessonData = await getLessons(course.id);
+      const lessonData = await getLessons(courseId);
       setLessons(lessonData); setDone([]); setActive(0); setLoading(false);
-      try { const progress = await getProgress(course.id, user.id); setDone(progress.completedLessonIds || []); }
+      try { const progress = await getProgress(courseId, user.id); setDone(progress.completedLessonIds || []); }
       catch { setError("Lessons loaded, but progress could not be loaded. You can still continue learning."); }
     }
     catch (err) { setError(err.message); }
     finally { setLoading(false); }
-  }, [course.id, user.id]);
+  }, [courseId, user.id]);
   useEffect(() => { const timer = setTimeout(load, 0); return () => clearTimeout(timer); }, [load]);
   if (loading) return <AppShell {...{ user, page, onNavigate, onLogout }}><LoadingState text="Preparing your lesson…" /></AppShell>;
   if (error && !lessons.length) return <AppShell {...{ user, page, onNavigate, onLogout }}><ErrorState message={error} onRetry={load} /></AppShell>;
