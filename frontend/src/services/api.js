@@ -1,10 +1,11 @@
-const API_URL = (import.meta.env.VITE_API_BASE_URL || "/api").replace(/\/+$/, "");
+const API_URL = (import.meta.env.VITE_API_BASE_URL || "https://careerforge-backend-ktj3.onrender.com/api").replace(/\/+$/, "");
 async function request(path, options = {}) {
+  const url = `${API_URL}/${path.replace(/^\/+/, "")}`;
   let response;
-  try { response = await fetch(`${API_URL}${path}`, { headers: { "Content-Type": "application/json", ...options.headers }, ...options }); }
-  catch { throw new Error("Unable to reach CareerForge. Check that the backend is running."); }
+  try { response = await fetch(url, { headers: { "Content-Type": "application/json", ...options.headers }, ...options }); }
+  catch { throw new Error(`Unable to reach CareerForge at ${url}. Check your connection and try again.`); }
   const data = await response.json().catch(() => null);
-  if (!response.ok) throw new Error(data?.message || data?.error || "Something went wrong. Please try again.");
+  if (!response.ok) throw new Error(data?.message || data?.error || `CareerForge returned ${response.status} for ${url}.`);
   return data;
 }
 

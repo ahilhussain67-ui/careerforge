@@ -12,7 +12,12 @@ export default function LearningPage({ user, page, onNavigate, onLogout, course,
   const [loading, setLoading] = useState(true);
   const load = useCallback(async () => {
     setLoading(true); setError("");
-    try { const [lessonData, progress] = await Promise.all([getLessons(course.id), getProgress(course.id, user.id)]); setLessons(lessonData); setDone(progress.completedLessonIds); setActive(0); }
+    try {
+      const lessonData = await getLessons(course.id);
+      setLessons(lessonData); setDone([]); setActive(0); setLoading(false);
+      try { const progress = await getProgress(course.id, user.id); setDone(progress.completedLessonIds || []); }
+      catch { setError("Lessons loaded, but progress could not be loaded. You can still continue learning."); }
+    }
     catch (err) { setError(err.message); }
     finally { setLoading(false); }
   }, [course.id, user.id]);
