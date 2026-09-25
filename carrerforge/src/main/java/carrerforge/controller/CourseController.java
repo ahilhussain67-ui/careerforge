@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import carrerforge.entity.Course;
+import carrerforge.dto.CourseResponse;
 import carrerforge.service.CourseService;
 @CrossOrigin(origins = "${app.cors.allowed-origin:http://localhost:5173}")
 @RestController
@@ -23,17 +23,17 @@ public class CourseController {
     }
 
     @GetMapping
-    public List<Course> findAll() {
-        return courseService.findAll();
+    public List<CourseResponse> findAll() {
+        return courseService.findAll().stream().map(CourseResponse::from).toList();
     }
 
     @GetMapping("/{id}")
-    public Course findById(@PathVariable Long id) {
-        return courseService.findById(id);
+    public CourseResponse findById(@PathVariable Long id) {
+        return CourseResponse.from(courseService.findById(id));
     }
 
     @PostMapping
-    public Course create(@RequestBody Course course) {
-        return courseService.save(course);
+    public CourseResponse create(@RequestBody carrerforge.entity.Course course) {
+        return CourseResponse.from(courseService.save(course));
     }
 }
