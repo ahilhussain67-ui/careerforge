@@ -5,7 +5,7 @@ import java.time.LocalDate;
 public class Job {
  @Id @GeneratedValue(strategy=GenerationType.IDENTITY) private Long id;
  private String title, company, location, jobType, experienceLevel, salaryRange, applicationUrl;
- @Lob private String description;
+ @Column(columnDefinition="TEXT") private String description;
  private String skills;
  private LocalDate postedDate;
  private boolean remoteAvailable;
